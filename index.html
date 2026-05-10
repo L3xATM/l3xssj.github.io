@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex González Martos — Tecnología & Creación Digital</title>
+<meta name="description" content="Técnico informático, productor multimedia y docente digital. Barcelona.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080810;
+    --surface: #0f0f1a;
+    --surface-2: #15151f;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.14);
+    --text-primary: #f0eee8;
+    --text-secondary: #8b8a9a;
+    --text-muted: #4a4a5a;
+    --accent: #6b5fff;
+    --accent-2: #00d9a3;
+    --accent-3: #ff6b6b;
+    --accent-glow: rgba(107,95,255,0.15);
+    --mono: 'DM Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(107,95,255,0.4);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.2s;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Grid noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(107,95,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(107,95,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,16,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-cta {
+    font-size: 12px;
+    padding: 8px 20px;
+    border: 1px solid var(--border-hover);
+    border-radius: 6px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .nav-cta:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.9s cubic-bezier(0.23,1,0.32,1) 0.1s forwards;
+  }
+
+  .hero-name .line-2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(240,238,232,0.25);
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s cubic-bezier(0.23,1,0.32,1) 0.25s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s cubic-bezier(0.23,1,0.32,1) 0.4s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-primary:hover {
+    background: #7b70ff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(107,95,255,0.35);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border: 1px solid var(--border-hover);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    background: var(--surface);
+  }
+
+  /* Floating status badge */
+  .hero-status {
+    position: absolute;
+    top: 140px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    opacity: 0;
+    animation: fadeIn 1s ease 0.6s forwards;
+  }
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 8px var(--accent-2);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── METRICS ── */
+  .metrics {
+    position: relative;
+    z-index: 1;
+    padding: 0 40px 120px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .metric-card {
+    background: var(--surface);
+    padding: 40px 36px;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .metric-card:hover { background: var(--surface-2); }
+
+  .metric-number {
+    font-family: var(--display);
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .metric-card:nth-child(1) .metric-number { -webkit-text-fill-color: var(--accent); background: none; }
+  .metric-card:nth-child(2) .metric-number { -webkit-text-fill-color: var(--accent-2); background: none; }
+  .metric-card:nth-child(3) .metric-number { -webkit-text-fill-color: var(--accent-3); background: none; }
+
+  .metric-unit {
+    font-size: 18px;
+    font-family: var(--display);
+    font-weight: 600;
+    vertical-align: super;
+    opacity: 0.6;
+  }
+
+  .metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  .metric-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+
+  .metric-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .metric-card:nth-child(1) .metric-tag { background: rgba(107,95,255,0.12); color: var(--accent); }
+  .metric-card:nth-child(2) .metric-tag { background: rgba(0,217,163,0.1); color: var(--accent-2); }
+  .metric-card:nth-child(3) .metric-tag { background: rgba(255,107,107,0.1); color: var(--accent-3); }
+
+  /* ── SECTION WRAPPER ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── SERVICIOS ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .service-card:hover {
+    border-color: var(--border-hover);
+    background: var(--surface-2);
+  }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  .service-icon.violet { background: rgba(107,95,255,0.12); }
+  .service-icon.teal { background: rgba(0,217,163,0.1); }
+  .service-icon.red { background: rgba(255,107,107,0.1); }
+  .service-icon.amber { background: rgba(255,180,60,0.1); }
+
+  .service-title {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .service-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ── STACK TÉCNICO ── */
+  .stack-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .stack-group-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .stack-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stack-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+  .stack-item:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+  .stack-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-violet { background: var(--accent); }
+  .dot-teal { background: var(--accent-2); }
+  .dot-red { background: var(--accent-3); }
+
+  /* ── IDIOMAS ── */
+  .lang-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .lang-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .lang-item:hover { border-color: var(--border-hover); }
+
+  .lang-name {
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 600;
+    width: 120px;
+    flex-shrink: 0;
+  }
+
+  .lang-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .lang-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s cubic-bezier(0.23,1,0.32,1);
+  }
+  .bar-native { background: var(--accent-2); }
+  .bar-b2 { background: var(--accent); }
+  .bar-auto { background: var(--accent-3); }
+
+  .lang-level {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    width: 80px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACTO ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .contact-headline {
+    font-family: var(--display);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .contact-headline span { color: var(--accent); }
+
+  .contact-sub {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .contact-link:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    background: var(--surface-2);
+  }
+  .contact-link-icon {
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  .contact-link-arrow {
+    margin-left: auto;
+    opacity: 0.3;
+    font-size: 12px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .contact-link:hover .contact-link-arrow {
+    opacity: 0.8;
+    transform: translateX(3px);
+  }
+
+  .contact-right {
+    position: sticky;
+    top: 100px;
+  }
+
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+  }
+
+  .contact-card-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .contact-info-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-info-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .contact-info-key { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; letter-spacing: 0.06em; }
+  .contact-info-val { font-size: 14px; color: var(--text-primary); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .footer-right {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── DIVIDER LINE ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-status { display: none; }
+    .metrics { padding: 0 20px 80px; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 20px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .stack-cols { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-right { position: static; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">AGM<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#idiomas">Idiomas</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="mailto:contactol3x@gmail.com" class="nav-cta">Escribir →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-status">
+    <span class="status-dot"></span>
+    Disponible para proyectos · Barcelona
+  </div>
+
+  <div class="hero-eyebrow">Tecnología & Creación Digital</div>
+
+  <h1 class="hero-name">
+    Alex<br>
+    <span class="line-2">González</span><br>
+    Martos
+  </h1>
+
+  <p class="hero-desc">
+    Técnico en hardware y software, productor multimedia y docente digital
+    con base en el área de Barcelona. Combino precisión técnica con visión creativa
+    para construir, enseñar y producir con criterio propio.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary">Trabajemos juntos ↗</a>
+    <a href="#servicios" class="btn-ghost">Ver servicios</a>
+  </div>
+</div>
+
+<!-- MÉTRICAS -->
+<div class="metrics">
+  <div class="metrics-grid">
+    <div class="metric-card reveal">
+      <div class="metric-tag">Polivalencia</div>
+      <div class="metric-number">5<span class="metric-unit">+</span></div>
+      <div class="metric-label">Disciplinas técnicas dominadas</div>
+      <div class="metric-desc">Hardware · Software · Edición audiovisual · Diseño gráfico · Docencia digital. Un único perfil que cubre todo el ciclo de producción y soporte.</div>
+    </div>
+    <div class="metric-card reveal">
+      <div class="metric-tag">Idiomas</div>
+      <div class="metric-number">4</div>
+      <div class="metric-label">Lenguas funcionales</div>
+      <div class="metric-desc">Castellano y catalán nativos · Inglés B2 certificado · Francés e italiano en nivel funcional autodidacta. Comunicación sin barreras en el mercado europeo.</div>
+    </div>
+    <div class="metric-card reveal">
+      <div class="metric-tag">Autonomía</div>
+      <div class="metric-number">100<span class="metric-unit">%</span></div>
+      <div class="metric-label">Aprendizaje autodidacta</div>
+      <div class="metric-desc">Sin universidad convencional. Formación en La Salle BCN y Institut Lliçà más 9+ meses de actividad freelance demuestran iniciativa y criterio propio desde el día uno.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-label">Servicios</div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon violet">🖥️</div>
+      <div class="service-title">Soporte Técnico IT</div>
+      <div class="service-body">Montaje, mantenimiento y reparación de equipos. Instalación de sistemas operativos (Windows, Linux), configuración de redes locales y resolución de averías de hardware y software.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon teal">🎬</div>
+      <div class="service-title">Producción Multimedia</div>
+      <div class="service-body">Edición de vídeo y audio con Adobe Premiere Pro, DaVinci Resolve y Pro Tools. Postproducción, diseño gráfico con Photoshop e Illustrator. Contenido digital listo para publicar.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon red">📡</div>
+      <div class="service-title">Docencia Digital</div>
+      <div class="service-body">Clases de informática básica, ofimática e Internet para jóvenes y adultos. Metodología adaptada al ritmo de cada alumno con material didáctico propio. Presencial en Lliçà d'Amunt y remoto.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon amber">⚙️</div>
+      <div class="service-title">Creación de Contenido Digital</div>
+      <div class="service-body">Materiales gráficos, presentaciones y contenido para comunidades online. Experiencia en gestión de comunidades en Discord y presencia multiplataforma consolidada.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STACK TÉCNICO -->
+<section id="stack">
+  <div class="section-label">Stack técnico</div>
+  <div class="stack-cols">
+    <div class="reveal">
+      <div class="stack-group-label">Hardware & Sistemas</div>
+      <div class="stack-items">
+        <div class="stack-item"><span class="stack-dot dot-violet"></span>Montaje de PCs</div>
+        <div class="stack-item"><span class="stack-dot dot-violet"></span>Windows / Linux</div>
+        <div class="stack-item"><span class="stack-dot dot-violet"></span>Redes locales</div>
+        <div class="stack-item"><span class="stack-dot dot-violet"></span>Diagnóstico físico</div>
+        <div class="stack-item"><span class="stack-dot dot-violet"></span>Drivers & optimización</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="stack-group-label">Multimedia & Diseño</div>
+      <div class="stack-items">
+        <div class="stack-item"><span class="stack-dot dot-teal"></span>Adobe Premiere Pro</div>
+        <div class="stack-item"><span class="stack-dot dot-teal"></span>DaVinci Resolve</div>
+        <div class="stack-item"><span class="stack-dot dot-teal"></span>Adobe Photoshop</div>
+        <div class="stack-item"><span class="stack-dot dot-teal"></span>Adobe Illustrator</div>
+        <div class="stack-item"><span class="stack-dot dot-teal"></span>Pro Tools / Reason</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="stack-group-label">Productividad & Otros</div>
+      <div class="stack-items">
+        <div class="stack-item"><span class="stack-dot dot-red"></span>Microsoft Word</div>
+        <div class="stack-item"><span class="stack-dot dot-red"></span>Excel / PowerPoint</div>
+        <div class="stack-item"><span class="stack-dot dot-red"></span>Prezi</div>
+        <div class="stack-item"><span class="stack-dot dot-red"></span>GIMP</div>
+        <div class="stack-item"><span class="stack-dot dot-red"></span>Discord · Comunidades</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- IDIOMAS -->
+<section id="idiomas">
+  <div class="section-label">Idiomas</div>
+  <div class="lang-list reveal">
+    <div class="lang-item">
+      <span class="lang-name">Castellano</span>
+      <div class="lang-bar-wrap"><div class="lang-bar bar-native" style="width:100%"></div></div>
+      <span class="lang-level">Nativo</span>
+    </div>
+    <div class="lang-item">
+      <span class="lang-name">Catalán</span>
+      <div class="lang-bar-wrap"><div class="lang-bar bar-native" style="width:100%"></div></div>
+      <span class="lang-level">Nativo</span>
+    </div>
+    <div class="lang-item">
+      <span class="lang-name">Inglés</span>
+      <div class="lang-bar-wrap"><div class="lang-bar bar-b2" style="width:70%"></div></div>
+      <span class="lang-level">B2 · 2023</span>
+    </div>
+    <div class="lang-item">
+      <span class="lang-name">Francés</span>
+      <div class="lang-bar-wrap"><div class="lang-bar bar-auto" style="width:42%"></div></div>
+      <span class="lang-level">Funcional</span>
+    </div>
+    <div class="lang-item">
+      <span class="lang-name">Italiano</span>
+      <div class="lang-bar-wrap"><div class="lang-bar bar-auto" style="width:38%"></div></div>
+      <span class="lang-level">Funcional</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-label">Contacto</div>
+  <div class="contact-grid">
+    <div class="reveal">
+      <h2 class="contact-headline">Hagamos<br>algo <span>real.</span></h2>
+      <p class="contact-sub">
+        Disponible para proyectos freelance, colaboraciones técnicas y clases personalizadas.
+        Tanto presencial en el área de Lliçà d'Amunt y Barcelona como en remoto.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:contactol3x@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          contactol3x@gmail.com
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="tel:+34683269557" class="contact-link">
+          <span class="contact-link-icon">☏</span>
+          +34 683 269 557
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/alexgonzález-martos-838162229" target="_blank" rel="noopener" class="contact-link">
+          <span class="contact-link-icon">in</span>
+          LinkedIn — Alex González Martos
+          <span class="contact-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right reveal">
+      <div class="contact-card">
+        <div class="contact-card-label">Ficha de contacto</div>
+        <div class="contact-info-item">
+          <span class="contact-info-key">Nombre</span>
+          <span class="contact-info-val">Alex González Martos</span>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-info-key">Ubicación</span>
+          <span class="contact-info-val">Lliçà d'Amunt, Barcelona</span>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-info-key">Modalidad</span>
+          <span class="contact-info-val">Presencial · Remoto</span>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-info-key">Disponibilidad</span>
+          <span class="contact-info-val" style="color: var(--accent-2);">● Activo</span>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-info-key">Experiencia</span>
+          <span class="contact-info-val">9 meses freelance activo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">© 2025 Alex González Martos · Todos los derechos reservados</div>
+  <div class="footer-right">BCN · ES</div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(1.5)'; ring.style.opacity = '0.5'; });
+    el.addEventListener('mouseleave', () => { ring.style.opacity = '1'; });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
