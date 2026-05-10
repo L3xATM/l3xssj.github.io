@@ -800,6 +800,134 @@
       height: 140px;
     }
   }
+
+  /* ── VAVEL / PERIODISMO ── */
+  .vavel-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .vavel-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .vavel-card:hover {
+    border-color: var(--border-hover);
+    background: var(--surface-2);
+  }
+  .vavel-card:hover::before { opacity: 1; }
+
+  .vavel-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .vavel-badge {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(255,107,107,0.1);
+    color: var(--accent-3);
+    font-weight: 500;
+  }
+  .vavel-medium {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .vavel-title {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .vavel-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+  .vavel-stats {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+  .vavel-stat-num {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent-3);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .vavel-stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .vavel-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    padding: 10px 22px;
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: 6px;
+    color: var(--accent-3);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .vavel-cta:hover {
+    background: rgba(255,107,107,0.08);
+    border-color: var(--accent-3);
+  }
+  .vavel-emblem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.85;
+  }
+  .vavel-shield {
+    font-size: 64px;
+    line-height: 1;
+    filter: drop-shadow(0 0 20px rgba(255,107,107,0.3));
+  }
+  .vavel-logo-text {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  @media (max-width: 768px) {
+    .vavel-card {
+      grid-template-columns: 1fr;
+      padding: 28px 24px;
+    }
+    .vavel-emblem { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -899,6 +1027,45 @@
       <div class="service-icon amber">⚙️</div>
       <div class="service-title">Creación de Contenido Digital</div>
       <div class="service-body">Materiales gráficos, presentaciones y contenido para comunidades online. Experiencia en gestión de comunidades en Discord y presencia multiplataforma consolidada.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PERIODISMO DEPORTIVO -->
+<section id="periodismo">
+  <div class="section-label">Periodismo deportivo</div>
+  <div class="vavel-card reveal">
+    <div>
+      <div class="vavel-meta">
+        <span class="vavel-badge">Atlético de Madrid</span>
+        <span class="vavel-medium">VAVEL España · Periodista acreditado</span>
+      </div>
+      <div class="vavel-title">Cobertura rojiblanca<br>en VAVEL</div>
+      <p class="vavel-desc">
+        Escribo artículos de análisis, previas y crónicas sobre el Atlético de Madrid
+        para VAVEL, uno de los principales medios deportivos digitales en español.
+        Cubro la actualidad del equipo desde una perspectiva técnica y periodística,
+        con seguimiento de LaLiga, Champions League y Copa del Rey.
+      </p>
+      <div class="vavel-stats">
+        <div>
+          <div class="vavel-stat-num">46</div>
+          <div class="vavel-stat-label">Artículos publicados</div>
+        </div>
+        <div>
+          <div class="vavel-stat-num">∞</div>
+          <div class="vavel-stat-label">Pasión colchonera</div>
+        </div>
+      </div>
+      <a href="https://www.vavel.com/es/author/l3xssj" target="_blank" rel="noopener" class="vavel-cta">
+        Ver perfil en VAVEL →
+      </a>
+    </div>
+    <div class="vavel-emblem">
+      <div class="vavel-shield">🔴⚪</div>
+      <div class="vavel-logo-text">VAVEL</div>
     </div>
   </div>
 </section>
