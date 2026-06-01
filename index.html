@@ -1,1103 +1,290 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<title>Alex González Martos</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-:root{
-  --bg:#09090b;
-  --surface:#111113;
-  --surface2:#18181b;
-  --border:#232326;
-  --border2:#303036;
-  --text:#f4f4f5;
-  --muted:#8d8d96;
-  --accent:#6ee7b7;
-  --accent2:#38bdf8;
-
-  --mono:'DM Mono', monospace;
-  --sans:'Syne', sans-serif;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--sans);
-  overflow-x:hidden;
-}
-
-/* GRAIN */
-
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.4;
-  z-index:0;
-
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
-}
-
-/* NAV */
-
-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:72px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:0 6vw;
-
-  background:rgba(9,9,11,.7);
-  backdrop-filter:blur(18px);
-
-  border-bottom:1px solid var(--border);
-
-  z-index:1000;
-}
-
-.nav-logo{
-  font-family:var(--mono);
-  font-size:.8rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:var(--text);
-}
-
-.nav-logo span{
-  color:var(--accent);
-}
-
-nav ul{
-  display:flex;
-  list-style:none;
-  gap:2rem;
-}
-
-nav a{
-  text-decoration:none;
-  color:var(--muted);
-
-  font-family:var(--mono);
-  font-size:.72rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-
-  transition:.25s;
-}
-
-nav a:hover{
-  color:var(--text);
-}
-
-/* MAIN */
-
-main{
-  position:relative;
-  z-index:1;
-}
-
-/* HERO */
-
-.hero{
-  min-height:100vh;
-
-  display:flex;
-  align-items:center;
-
-  padding:
-    8rem
-    6vw
-    5rem;
-
-  position:relative;
-  overflow:hidden;
-}
-
-.hero::after{
-  content:'';
-  position:absolute;
-
-  width:900px;
-  height:900px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(110,231,183,.08) 0%,
-      transparent 70%
-    );
-
-  top:50%;
-  left:50%;
-
-  transform:translate(-50%,-50%);
-}
-
-.hero::before{
-  content:'';
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.02),
-      transparent
-    );
-}
-
-.hero-inner{
-  max-width:920px;
-  position:relative;
-  z-index:2;
-}
-
-.hero-eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:.7rem;
-
-  color:var(--accent);
-
-  font-family:var(--mono);
-  font-size:.75rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-
-  margin-bottom:2rem;
-
-  animation:fadeUp .7s ease forwards;
-}
-
-.hero-eyebrow::before{
-  content:'';
-  width:30px;
-  height:1px;
-  background:var(--accent);
-}
-
-h1{
-  font-size:clamp(4rem,9vw,8rem);
-  line-height:.92;
-  letter-spacing:-.05em;
-  font-weight:800;
-
-  margin-bottom:2rem;
-
-  animation:fadeUp .8s .1s ease forwards;
-  opacity:0;
-}
-
-h1 em{
-  font-style:normal;
-
-  background:
-    linear-gradient(
-      120deg,
-      var(--accent),
-      var(--accent2)
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.hero-sub{
-  max-width:720px;
-
-  font-size:1rem;
-  line-height:1.9;
-
-  color:var(--muted);
-
-  font-family:var(--mono);
-
-  margin-bottom:3rem;
-
-  animation:fadeUp .8s .25s ease forwards;
-  opacity:0;
-}
-
-.hero-cta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:1rem;
-
-  animation:fadeUp .8s .4s ease forwards;
-  opacity:0;
-}
-
-.btn{
-  position:relative;
-
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-
-  padding:.9rem 1.7rem;
-
-  border-radius:10px;
-
-  text-decoration:none;
-
-  overflow:hidden;
-
-  transition:.25s;
-
-  font-family:var(--mono);
-  font-size:.78rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-}
-
-.btn::after{
-  content:'';
-  position:absolute;
-  top:0;
-  left:-100%;
-
-  width:100%;
-  height:100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.12),
-      transparent
-    );
-
-  transition:.6s;
-}
-
-.btn:hover::after{
-  left:100%;
-}
-
-.btn-primary{
-  background:var(--accent);
-  color:#000;
-  font-weight:600;
-}
-
-.btn-primary:hover{
-  transform:translateY(-2px);
-}
-
-.btn-ghost{
-  border:1px solid var(--border2);
-  color:var(--text);
-}
-
-.btn-ghost:hover{
-  border-color:var(--accent);
-  transform:translateY(-2px);
-}
-
-/* SECTIONS */
-
-section{
-  padding:6rem 6vw;
-  border-top:1px solid var(--border);
-}
-
-.section-tag{
-  color:var(--accent);
-
-  font-family:var(--mono);
-  font-size:.7rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-
-  margin-bottom:1.8rem;
-
-  display:inline-flex;
-  gap:.5rem;
-  align-items:center;
-}
-
-.section-tag::before{
-  content:'//';
-  color:var(--border2);
-}
-
-h2{
-  font-size:clamp(2rem,4vw,3rem);
-  margin-bottom:3rem;
-  letter-spacing:-.03em;
-}
-
-/* METRICS */
-
-.metrics{
-  padding:5rem 6vw;
-}
-
-.metrics-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:1px;
-
-  background:var(--border);
-
-  border:1px solid var(--border);
-  border-radius:18px;
-
-  overflow:hidden;
-}
-
-.metric-card{
-  background:var(--surface);
-
-  padding:2.5rem;
-
-  transition:.25s;
-
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.01),
-    0 10px 30px rgba(0,0,0,.18);
-}
-
-.metric-card:hover{
-  background:var(--surface2);
-}
-
-.metric-num{
-  font-size:3.3rem;
-  font-family:var(--mono);
-
-  margin-bottom:.8rem;
-
-  background:
-    linear-gradient(
-      120deg,
-      var(--accent),
-      var(--accent2)
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.metric-label{
-  color:var(--muted);
-
-  font-family:var(--mono);
-  font-size:.72rem;
-  line-height:1.8;
-
-  text-transform:uppercase;
-  letter-spacing:.1em;
-}
-
-/* CARDS */
-
-.grid{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(280px,1fr));
-
-  gap:1rem;
-}
-
-.card{
-  background:var(--surface);
-
-  border:1px solid var(--border);
-
-  border-radius:16px;
-
-  padding:1.5rem;
-
-  transition:.25s;
-
-  backdrop-filter:blur(12px);
-
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.01),
-    0 10px 30px rgba(0,0,0,.18);
-}
-
-.card:hover{
-  border-color:var(--border2);
-  transform:translateY(-4px);
-}
-
-.card-icon{
-  width:44px;
-  height:44px;
-
-  display:grid;
-  place-items:center;
-
-  border-radius:10px;
-
-  margin-bottom:1rem;
-
-  background:
-    rgba(110,231,183,.08);
-
-  font-size:1.1rem;
-}
-
-.card h3{
-  margin-bottom:.7rem;
-  font-size:1rem;
-}
-
-.card p{
-  color:var(--muted);
-
-  font-family:var(--mono);
-  font-size:.75rem;
-  line-height:1.8;
-}
-
-/* LANGS */
-
-.lang-badge{
-  display:inline-block;
-
-  margin-top:1rem;
-
-  padding:.3rem .6rem;
-
-  border-radius:6px;
-
-  background:
-    rgba(110,231,183,.1);
-
-  color:var(--accent);
-
-  font-family:var(--mono);
-  font-size:.62rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-}
-
-/* EDUCATION */
-
-.edu-list{
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-}
-
-.edu-item{
-  background:var(--surface);
-
-  border:1px solid var(--border);
-
-  border-radius:16px;
-
-  padding:1.6rem;
-
-  display:flex;
-  justify-content:space-between;
-  gap:2rem;
-  align-items:center;
-  flex-wrap:wrap;
-
-  transition:.25s;
-}
-
-.edu-item:hover{
-  border-color:var(--border2);
-}
-
-.edu-school{
-  color:var(--accent);
-
-  font-family:var(--mono);
-  font-size:.72rem;
-  letter-spacing:.08em;
-
-  margin-bottom:.4rem;
-}
-
-.edu-title{
-  font-size:1rem;
-}
-
-.edu-status{
-  border:1px solid var(--border2);
-
-  border-radius:100px;
-
-  padding:.45rem .9rem;
-
-  font-family:var(--mono);
-  font-size:.65rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-
-  color:var(--muted);
-}
-
-/* CONTACT */
-
-.contact{
-  display:flex;
-  justify-content:space-between;
-  gap:3rem;
-  flex-wrap:wrap;
-}
-
-.contact p{
-  color:var(--muted);
-  font-family:var(--mono);
-  line-height:1.8;
-}
-
-.contact-links{
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-}
-
-.contact-links a{
-  color:var(--text);
-  text-decoration:none;
-
-  font-family:var(--mono);
-  font-size:.8rem;
-
-  transition:.25s;
-}
-
-.contact-links a:hover{
-  color:var(--accent);
-}
-
-/* FOOTER */
-
-footer{
-  border-top:1px solid var(--border);
-
-  padding:2rem 6vw;
-
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:1rem;
-}
-
-footer p{
-  color:var(--muted);
-
-  font-family:var(--mono);
-  font-size:.72rem;
-  letter-spacing:.08em;
-}
-
-footer span{
-  color:var(--accent);
-}
-
-/* REVEAL */
-
-.reveal{
-  opacity:0;
-  transform:translateY(30px);
-  transition:
-    opacity .8s,
-    transform .8s;
-}
-
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-  nav ul{
-    display:none;
-  }
-
-  h1{
-    font-size:4rem;
-  }
-
-  .hero{
-    padding-top:9rem;
-  }
-
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="L3x, marca personal de Alex Gonzalez Martos. Optimizacion de PCs, soporte tecnico, soluciones digitales y proyectos online."
+  />
+  <title>L3x | Alex Gonz&aacute;lez Martos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-<nav>
-
-  <div class="nav-logo">
-    alex<span>.</span>gz
-  </div>
-
-  <ul>
-    <li><a href="#sobre">Sobre mí</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#perfil">Perfil</a></li>
-    <li><a href="#formacion">Formación</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-
-</nav>
-
-<main>
-
-<section class="hero" id="sobre">
-
-  <div class="hero-inner">
-
-    <div class="hero-eyebrow">
-      Estudiante · Lliçà d'Amunt · Barcelona
-    </div>
-
-    <h1>
-      Alex<br>
-      González<br>
-      <em>Martos.</em>
-    </h1>
-
-    <p class="hero-sub">
-      Estudiante con perfil técnico-creativo especializado en hardware,
-      redes, edición audiovisual y diseño digital.
-
-      He desarrollado experiencia práctica trabajando con sistemas
-      informáticos, herramientas multimedia y producción de contenido
-      visual.
-
-      Finalicé dos ciclos formativos de grado medio relacionados con
-      sistemas microinformáticos e imagen y sonido, sin titulacion oficial.
-
-      Actualmente sigo ampliando mis conocimientos de forma autodidacta,
-      desarrollando proyectos propios y explorando nuevas tecnologías
-      creativas y digitales.
-    </p>
-
-    <div class="hero-cta">
-
-      <a href="#contacto" class="btn btn-primary">
-        Contactar
+  <header class="site-header">
+    <nav class="nav" aria-label="Navegaci&oacute;n principal">
+      <a class="brand" href="index.html" aria-label="Inicio de L3x">
+        <span class="brand-mark">L3x</span>
+        <span class="brand-copy">
+          <strong>Alex Gonz&aacute;lez Martos</strong>
+          <small>Clean Tech Services</small>
+        </span>
       </a>
 
-      <a href="#skills" class="btn btn-ghost">
-        Ver skills →
-      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-menu" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-      <a href="https://l3xatm.github.io/l3xssj.github.io/#"
-         target="_blank"
-         class="btn btn-ghost">
+      <ul class="nav-links" id="main-menu">
+        <li><a class="is-active" href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="sobre-l3x.html">Sobre L3x</a></li>
+        <li><a href="recursos.html">FAQ</a></li>
+        <li><a class="nav-cta" href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        Página web ↗
-      </a>
+  <main id="contenido">
+    <section class="hero section-bleed" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">L3x / soporte tecnico / proyectos online</p>
+          <h1 id="hero-title">Optimizaci&oacute;n, soporte y soluciones digitales con criterio t&eacute;cnico.</h1>
+          <p class="hero-text">
+            Soy Alex Gonz&aacute;lez Martos. Ayudo a mejorar el rendimiento de PCs, resolver problemas digitales y construir
+            presencia online con una metodolog&iacute;a clara, paciente y orientada a resultados.
+          </p>
+          <div class="hero-actions" aria-label="Acciones principales">
+            <a class="button button-dark" href="contacto.html">Solicitar soporte</a>
+            <a class="button button-light" href="proyectos.html">Ver proyectos</a>
+          </div>
+        </div>
 
-    </div>
-
-  </div>
-
-</section>
-
-<div class="metrics reveal">
-
-  <div class="metrics-grid">
-
-    <div class="metric-card">
-      <div class="metric-num">10+</div>
-      <div class="metric-label">
-        años aprendiendo inglés<br>
-        evolución académica constante
+        <aside class="system-panel reveal" aria-label="Resumen tecnico de L3x">
+          <div class="panel-top">
+            <span>STATUS</span>
+            <strong>AVAILABLE</strong>
+          </div>
+          <div class="terminal-lines" aria-hidden="true">
+            <span>&gt; diagnostic.scan()</span>
+            <span>&gt; bottleneck.detected: true</span>
+            <span>&gt; solution.path: clear</span>
+            <span>&gt; execution.mode: calm</span>
+          </div>
+          <dl class="panel-metrics">
+            <div>
+              <dt>Focus</dt>
+              <dd>PC Performance</dd>
+            </div>
+            <div>
+              <dt>Mindset</dt>
+              <dd>Problem Solving</dd>
+            </div>
+            <div>
+              <dt>Languages</dt>
+              <dd>ES / CA / EN B2</dd>
+            </div>
+          </dl>
+        </aside>
       </div>
-    </div>
+    </section>
 
-    <div class="metric-card">
-      <div class="metric-num">15+</div>
-      <div class="metric-label">
-        herramientas técnicas y creativas<br>
-        utilizadas en proyectos
+    <section class="signal-strip" aria-label="Resumen de servicios">
+      <div class="container signal-grid">
+        <div>
+          <span>01</span>
+          <strong>Optimizaci&oacute;n de PCs</strong>
+        </div>
+        <div>
+          <span>02</span>
+          <strong>Soporte digital</strong>
+        </div>
+        <div>
+          <span>03</span>
+          <strong>Proyectos online</strong>
+        </div>
+        <div>
+          <span>04</span>
+          <strong>Consultor&iacute;a t&eacute;cnica</strong>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="metric-card">
-      <div class="metric-num">2</div>
-      <div class="metric-label">
-        grados medios finalizados<br>
-        perfil técnico + audiovisual
+    <section class="section" id="manifiesto">
+      <div class="container split">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Manifiesto</p>
+          <h2>La tecnolog&iacute;a debe ser estable, comprensible y realmente &uacute;til.</h2>
+        </div>
+        <div class="content-stack reveal">
+          <p>
+            Mi relaci&oacute;n con la inform&aacute;tica nace de una idea sencilla: entender c&oacute;mo funcionan las cosas
+            para poder mejorarlas. Desde la optimizaci&oacute;n de un PC hasta la creaci&oacute;n de un proyecto online,
+            trabajo con una mentalidad pr&aacute;ctica, anal&iacute;tica y ordenada.
+          </p>
+          <p>
+            No creo en soluciones improvisadas. Creo en observar, diagnosticar, mantener la calma y aplicar cambios
+            que tengan sentido. L3x es mi espacio profesional para unir soporte t&eacute;cnico, criterio digital y pasi&oacute;n
+            por la tecnolog&iacute;a.
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
 
-  </div>
+    <section class="section section-dark" id="servicios">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Servicios destacados</p>
+          <h2>Soluciones para mejorar tu entorno digital.</h2>
+          <p>
+            Servicios pensados para personas, creadores y peque&ntilde;os proyectos que necesitan rendimiento,
+            estabilidad y una ejecuci&oacute;n t&eacute;cnica m&aacute;s clara.
+          </p>
+        </div>
 
-</div>
-
-<section id="skills">
-
-  <div class="section-tag">habilidades</div>
-
-  <h2>Qué sé hacer</h2>
-
-  <div class="grid reveal">
-
-    <div class="card">
-      <div class="card-icon">⚙️</div>
-      <h3>Hardware & Redes</h3>
-      <p>
-        Montaje, mantenimiento y diagnóstico de ordenadores.
-        Configuración básica de redes y sistemas operativos.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🎬</div>
-      <h3>Edición Audiovisual</h3>
-      <p>
-        Premiere Pro, DaVinci Resolve y Sony Vegas.
-        Edición, color grading y producción multimedia.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🎧</div>
-      <h3>Producción de Audio</h3>
-      <p>
-        Producción musical, mezcla y organización de proyectos
-        utilizando software de audio profesional.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🎨</div>
-      <h3>Diseño Gráfico</h3>
-      <p>
-        Photoshop, Illustrator y GIMP.
-        Diseño digital, branding y contenido visual.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">📊</div>
-      <h3>Ofimática</h3>
-      <p>
-        Manejo de Word, Excel, PowerPoint y herramientas
-        de productividad y presentaciones.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🔧</div>
-      <h3>Resolución Técnica</h3>
-      <p>
-        Optimización de sistemas, instalación de drivers
-        y resolución de problemas técnicos.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-<section id="perfil">
-
-  <div class="section-tag">perfil</div>
-
-  <h2>Sobre mí</h2>
-
-  <div class="grid reveal">
-
-    <div class="card">
-      <div class="card-icon">💻</div>
-      <h3>Tecnología</h3>
-      <p>
-        Interesado en hardware gaming, sistemas,
-        componentes y optimización de equipos.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🎥</div>
-      <h3>Contenido Multimedia</h3>
-      <p>
-        Experiencia en edición de vídeo,
-        diseño gráfico y creación de contenido digital.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🚀</div>
-      <h3>Aprendizaje Continuo</h3>
-      <p>
-        Formación autodidacta constante mediante proyectos
-        personales y nuevas tecnologías.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-<section>
-
-  <div class="section-tag">idiomas</div>
-
-  <h2>Comunicación</h2>
-
-  <div class="grid reveal">
-
-    <div class="card">
-      <div class="card-icon">🟢</div>
-      <h3>Català</h3>
-      <p>
-        Llengua materna
-      </p>
-
-      <div class="lang-badge">
-        Natiu
+        <div class="service-grid reveal">
+          <article class="service-card">
+            <span>01</span>
+            <h3>Optimizaci&oacute;n de hardware y software</h3>
+            <p>Revisi&oacute;n de rendimiento, procesos, drivers, almacenamiento, configuraci&oacute;n del sistema y posibles cuellos de botella.</p>
+            <a href="servicios.html#optimizacion">Explorar servicio</a>
+          </article>
+          <article class="service-card">
+            <span>02</span>
+            <h3>Soporte de soluciones digitales</h3>
+            <p>Acompa&ntilde;amiento para resolver incidencias, configurar herramientas y ordenar flujos de trabajo digitales.</p>
+            <a href="servicios.html#soporte">Explorar servicio</a>
+          </article>
+          <article class="service-card">
+            <span>03</span>
+            <h3>Creaci&oacute;n de proyectos online</h3>
+            <p>Estructura, publicaci&oacute;n y mejora de webs personales, recursos digitales y presencia online funcional.</p>
+            <a href="servicios.html#online">Explorar servicio</a>
+          </article>
+          <article class="service-card">
+            <span>04</span>
+            <h3>Consultor&iacute;a t&eacute;cnica</h3>
+            <p>Orientaci&oacute;n para elegir componentes, mejorar equipos y tomar decisiones tecnol&oacute;gicas con m&aacute;s seguridad.</p>
+            <a href="servicios.html#consultoria">Explorar servicio</a>
+          </article>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <div class="card-icon">🔵</div>
-      <h3>Castellano</h3>
-      <p>
-        Lengua materna
-      </p>
+    <section class="section" id="habilidades">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Habilidades clave</p>
+          <h2>Resoluci&oacute;n, paciencia y calma bajo presi&oacute;n.</h2>
+        </div>
 
-      <div class="lang-badge">
-        Nativo
+        <div class="feature-grid reveal">
+          <article class="feature">
+            <h3>Resoluci&oacute;n de problemas</h3>
+            <p>Analizo desde la causa, no desde el s&iacute;ntoma. El objetivo es encontrar soluciones estables y comprensibles.</p>
+          </article>
+          <article class="feature">
+            <h3>Paciencia t&eacute;cnica</h3>
+            <p>La tecnolog&iacute;a puede ser frustrante cuando algo falla. Trabajo con orden para resolver sin sumar complejidad.</p>
+          </article>
+          <article class="feature">
+            <h3>Resiliencia</h3>
+            <p>Cuando un problema no se resuelve a la primera, sigo investigando. La constancia forma parte del proceso.</p>
+          </article>
+          <article class="feature">
+            <h3>Calma operativa</h3>
+            <p>Mantener claridad bajo presi&oacute;n ayuda a evitar errores, recuperar control y tomar mejores decisiones.</p>
+          </article>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <div class="card-icon">🟣</div>
-      <h3>English</h3>
-      <p>
-        Nivel B2 · Evolución académica desde 2016
-      </p>
-
-      <div class="lang-badge">
-        B2 CEFR
+    <section class="section section-muted" id="proyectos">
+      <div class="container project-callout">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Proyectos &amp; GitHub</p>
+          <h2>Un espacio para experimentar, construir y evolucionar.</h2>
+          <p>
+            Mis proyectos muestran mi forma de aprender: probar herramientas, crear estructuras, publicar ideas y
+            mejorar cada entrega con criterio t&eacute;cnico y visual.
+          </p>
+        </div>
+        <div class="project-box reveal">
+          <span>Repositorio actual</span>
+          <strong>l3xatm.github.io</strong>
+          <p>Explora proyectos online, avances y pruebas publicadas.</p>
+          <div class="button-row">
+            <a class="button button-dark" href="proyectos.html">Ver portfolio</a>
+            <a class="button button-light" href="https://l3xatm.github.io/l3xssj.github.io/#" target="_blank" rel="noreferrer">Abrir enlace externo</a>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-  </div>
+    <section class="section" id="faq">
+      <div class="container split">
+        <div class="section-heading reveal">
+          <p class="eyebrow">FAQ</p>
+          <h2>Preguntas frecuentes antes de pedir soporte.</h2>
+        </div>
+        <div class="faq-list reveal">
+          <details>
+            <summary>&iquest;Puedes ayudarme si mi PC va lento?</summary>
+            <p>S&iacute;. Puedo revisar procesos, almacenamiento, drivers, configuraci&oacute;n y posibles causas de bajo rendimiento para proponer mejoras concretas.</p>
+          </details>
+          <details>
+            <summary>&iquest;La optimizaci&oacute;n implica formatear?</summary>
+            <p>No necesariamente. Primero se analiza el problema. Muchas mejoras se pueden aplicar sin reinstalar el sistema completo.</p>
+          </details>
+          <details>
+            <summary>&iquest;Recomiendas componentes o mejoras de hardware?</summary>
+            <p>S&iacute;. Puedo orientar sobre RAM, almacenamiento, gr&aacute;fica, refrigeraci&oacute;n u otros componentes seg&uacute;n uso y presupuesto.</p>
+          </details>
+          <details>
+            <summary>&iquest;Trabajas con proyectos online?</summary>
+            <p>S&iacute;. Puedo colaborar en p&aacute;ginas personales, recursos digitales, estructura web, publicaci&oacute;n de proyectos y soporte relacionado.</p>
+          </details>
+        </div>
+      </div>
+    </section>
 
-</section>
+    <section class="section section-dark cta-section">
+      <div class="container cta-grid reveal">
+        <div>
+          <p class="eyebrow">Contacto</p>
+          <h2>Hablemos de c&oacute;mo mejorar tu entorno tecnol&oacute;gico.</h2>
+        </div>
+        <div>
+          <p>
+            Si necesitas optimizar tu PC, resolver una incidencia o dar forma a un proyecto digital, puedes escribirme
+            directamente. Te responder&eacute; con una visi&oacute;n clara, honesta y orientada a soluciones.
+          </p>
+          <div class="button-row">
+            <a class="button button-light-on-dark" href="mailto:contactol3x@gmail.com">contactol3x@gmail.com</a>
+            <a class="button button-outline-on-dark" href="tel:+34683269557">683 26 95 57</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<section id="formacion">
-
-  <div class="section-tag">formación</div>
-
-  <h2>Recorrido académico</h2>
-
-  <div class="edu-list reveal">
-
-    <div class="edu-item">
-
+  <footer class="site-footer">
+    <div class="container footer-grid">
       <div>
-        <div class="edu-school">
-          Institut de Lliçà d'Amunt
-        </div>
-
-        <div class="edu-title">
-          Educación Secundaria Obligatoria (ESO)
-        </div>
+        <strong>L3x</strong>
+        <p>Optimizaci&oacute;n de PCs, soporte digital y proyectos online.</p>
       </div>
-
-      <div class="edu-status">
-        Completado
-      </div>
-
+      <nav aria-label="Navegaci&oacute;n secundaria">
+        <a href="servicios.html">Servicios</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="sobre-l3x.html">Sobre L3x</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
     </div>
+  </footer>
 
-    <div class="edu-item">
-
-      <div>
-        <div class="edu-school">
-          Institut de Lliçà d'Amunt · Edifici Sant Baldiri
-        </div>
-
-        <div class="edu-title">
-          Grado Medio en Sistemas Microinformáticos y Redes
-        </div>
-      </div>
-
-      <div class="edu-status">
-        Finalizado
-      </div>
-
-    </div>
-
-    <div class="edu-item">
-
-      <div>
-        <div class="edu-school">
-          La Salle Barceloneta
-        </div>
-
-        <div class="edu-title">
-          Grado Medio en Vídeo, DJ y Sonido
-        </div>
-      </div>
-
-      <div class="edu-status">
-        Finalizado
-      </div>
-
-    </div>
-
-    <div class="edu-item">
-
-      <div>
-        <div class="edu-school">
-          Formación complementaria
-        </div>
-
-        <div class="edu-title">
-          Aprendizaje autodidacta en hardware,
-          edición multimedia y tecnologías digitales.
-        </div>
-      </div>
-
-      <div class="edu-status">
-        Activo
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section id="contacto">
-
-  <div class="contact reveal">
-
-    <div>
-
-      <div class="section-tag">
-        contacto
-      </div>
-
-      <h2>¿Hablamos?</h2>
-
-      <p>
-        Disponible para colaboraciones,
-        proyectos y oportunidades creativas.
-      </p>
-
-    </div>
-
-    <div class="contact-links">
-
-      <a href="mailto:contactol3x@gmail.com">
-        contactol3x@gmail.com
-      </a>
-
-      <a href="tel:+34683269557">
-        +34 683 269 557
-      </a>
-
-      <a href="https://l3xatm.github.io/l3xssj.github.io/#"
-         target="_blank">
-
-        l3xatm.github.io
-      </a>
-
-      <a>
-        Lliçà d'Amunt, Barcelona
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
-</main>
-
-<footer>
-
-  <p>
-    © 2026 <span>Alex González Martos</span>
-  </p>
-
-  <p>
-  Lliçà d'Amunt, Barcelona
-  </p>
-
-</footer>
-
-<script>
-
-const observer = new IntersectionObserver(entries => {
-
-  entries.forEach(entry => {
-
-    if(entry.isIntersecting){
-
-      entry.target.classList.add('visible');
-
-      observer.unobserve(entry.target);
-
-    }
-
-  });
-
-},{
-  threshold:.12
-});
-
-document
-.querySelectorAll('.reveal')
-.forEach(el => observer.observe(el));
-
-</script>
-
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
