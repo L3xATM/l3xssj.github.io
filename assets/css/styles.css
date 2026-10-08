@@ -344,3 +344,23 @@ html.js.is-intro:not(.is-ready) .loader{animation:failsafe 0s 6s forwards}
 .ld-tech.tl,.ld-tech.bl{left:30px}.ld-tech.tr,.ld-tech.br{right:30px}
 }
 @media (prefers-reduced-motion:reduce){.loader{display:none!important}}
+
+/* Perfil personal: ficha, formación, conocimientos e intereses */
+.profile-facts{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:14px clamp(24px,5vw,72px);margin-top:44px;padding-top:22px;border-top:1px solid var(--line)}
+.profile-facts dt{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.profile-facts dd{margin-top:4px;color:var(--ink)}
+.page-hero .tags{margin-top:28px}
+.tags li{transition:border-color .3s,color .3s,translate .4s var(--ease)}
+.tags li:hover{border-color:var(--ink);color:var(--ink);translate:0 -2px}
+.skill-group{padding:30px 0;border-top:1px solid var(--line)}
+.skill-group h3{font-size:clamp(1.15rem,1.9vw,1.5rem)}
+.content-stack .skill-group .meta{margin:6px 0 0;font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.skill-group .tags{margin-top:18px}
+.interest-list{display:grid;grid-template-columns:1fr 1fr;margin:2em 0 1em;border-top:1px solid var(--line)}
+.interest-list li{padding:20px 20px 20px 0;border-bottom:1px solid var(--line);transition:translate .4s var(--ease)}
+.interest-list li:hover{translate:6px 0}
+.interest-list strong{display:block;font-size:1.1rem;letter-spacing:-.01em;transition:color .3s}
+.interest-list li:hover strong{color:var(--acc)}
+.interest-list span{color:var(--mute);font-size:.95rem}
+.contact-card.wide{grid-column:1/-1;min-height:260px}
+@media (max-width:860px){.profile-facts{grid-template-columns:repeat(2,auto)}.interest-list{grid-template-columns:1fr}}
